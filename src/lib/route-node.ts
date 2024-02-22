@@ -51,11 +51,29 @@ export class RouteNode<TChildren extends RouteNodeObject = any, TParams extends 
   }
 
   public get relativeUrlWithParent(): string {
-    if (!this.parent) {
-      return this.relativeUrl;
+    return this.getRelativeWithParents(1);
+  }
+
+  public getRelativeWithParents(numberOfParents: number): string {
+    if (numberOfParents > 1000) {
+      throw new Error('Too high numberOfParents!');
     }
 
-    return `${ this.parent.relativeUrl }/${ this.relativeUrl }`;
+    let result = this.relativeUrl;
+
+    let levels = numberOfParents;
+    let currentParentNode: RouteNode | undefined = this.parent;
+
+    while (currentParentNode && levels > 0) {
+      if (currentParentNode.relativeUrl) {
+        result = result ? `${ currentParentNode.relativeUrl }/${ result }` : currentParentNode.relativeUrl;
+      }
+
+      levels--;
+      currentParentNode = currentParentNode.parent;
+    }
+
+    return result;
   }
 
   public getAbsoluteUrlWithParams(params: { [prop: string]: string }, query?: { [prop: string]: string | undefined }) {
