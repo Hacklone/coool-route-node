@@ -21,13 +21,11 @@ export const RouteLocations = {
   }),
 
   Dashboard: new RouteNode('dashboard', {
-    children: {
-      Items: new RouteNode('items/:itemId', {
-        params: {
-          'itemId': 'itemId',
-        }
-      }),
-    },
+    Items: new RouteNode('items/:itemId', undefined, {
+      params: {
+        'itemId': 'itemId',
+      },
+    }),
   }),
 };
 ```

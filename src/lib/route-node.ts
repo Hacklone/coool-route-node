@@ -8,16 +8,16 @@ export class RouteNode<TChildren extends RouteNodeObject = any, TParams extends 
   private _absoluteUrl?: string;
 
   constructor(
-    public relativeUrl: string,
-    options: {
-      children?: TChildren;
+    private _relativeUrl: string = '',
+    children?: TChildren,
+    options?: {
       params?: TParams;
       queryParams?: TQueryParams;
-    } = {},
+    },
   ) {
-    this.children = options.children ?? this.children;
-    this.params = options.params ?? this.params;
-    this.queryParams = options.queryParams ?? this.queryParams;
+    this.children = children ?? this.children;
+    this.params = options?.params ?? this.params;
+    this.queryParams = options?.queryParams ?? this.queryParams;
 
     if (this.children) {
       for (const child of Object.values<RouteNode>(this.children)) {
@@ -28,9 +28,18 @@ export class RouteNode<TChildren extends RouteNodeObject = any, TParams extends 
     this._validateParamsInUrl();
   }
 
-  public readonly children: TChildren = <any>{};
-  public readonly params: TParams = <any>{};
-  public readonly queryParams: TQueryParams = <any>{};
+  public get relativeUrl(): string {
+    return this._relativeUrl;
+  }
+
+  public readonly children: TChildren = <TChildren>{};
+
+  public get _(): TChildren {
+    return this.children;
+  }
+
+  public readonly params: TParams = <TParams>{};
+  public readonly queryParams: TQueryParams = <TQueryParams>{};
 
   public parent: RouteNode | undefined;
 
