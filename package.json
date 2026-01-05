@@ -1,6 +1,6 @@
 {
   "name": "@coool/route-node",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "scripts": {
     "build": "npm run clean && npm run build:compile && npm run build:copyFiles",
     "clean": "rm -rf dist",

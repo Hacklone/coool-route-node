@@ -121,3 +121,14 @@ export class RouteNode<TChildren extends RouteNodeObject = any, TParams extends 
     }
   }
 }
+
+export function routeNode<TChildren extends RouteNodeObject = any, TParams extends RouteNodeParams = any, TQueryParams extends RouteNodeParams = any>(
+  relativeUrl: string = '',
+  children?: TChildren,
+  options?: {
+    params?: TParams;
+    queryParams?: TQueryParams;
+  },
+): RouteNode {
+  return new RouteNode<TChildren, TParams, TQueryParams>(relativeUrl, children, options);
+}

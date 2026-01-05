@@ -1,1 +1,1 @@
-export { RouteNode } from './lib/route-node';
+export { RouteNode, routeNode } from './lib/route-node';
